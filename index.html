@@ -8,12 +8,25 @@
 :root { color-scheme: light; --bg:#f4f6f9; --card:#fff; --border:#e2e8f0; --text:#1a202c; --muted:#718096; }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);padding:16px;font-size:14px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--border)}
 header h1{font-size:18px;font-weight:700}
 header .date{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* 탭 네비게이션 */
+.tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.tab-btn:hover{border-color:#805ad5;color:#805ad5}
+.tab-btn.active{background:#805ad5;border-color:#805ad5;color:#fff}
+
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){
+  .grid{grid-template-columns:1fr}
+  .section.full-width{grid-column:1}
+}
 .section{background:var(--card);border-radius:10px;border:1px solid var(--border);overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .section.full-width{grid-column:1/-1}
+.section.hidden{display:none}
 .section-header{display:flex;align-items:center;gap:8px;padding:11px 14px;border-left:4px solid}
 .section-header h2{font-size:13px;font-weight:700;flex:1}
 .section-header .count{font-size:11px;color:var(--muted);background:var(--bg);padding:2px 7px;border-radius:10px}
@@ -22,13 +35,16 @@ header .date{font-size:11px;color:var(--muted);margin-top:3px}
 .s3 .section-header{border-color:#38a169;background:#f0fff4}
 .s4 .section-header{border-color:#dd6b20;background:#fffaf0}
 .s5 .section-header{border-color:#805ad5;background:#faf5ff}
+.s6 .section-header{border-color:#0987a0;background:#e6fffa}
 .news-wrap{border-bottom:1px solid var(--border)}
 .news-wrap:last-child{border-bottom:none}
 .news-item{padding:10px 14px 6px;text-decoration:none;display:block;color:inherit}
 .news-item:hover{background:var(--bg)}
 .news-item .title{font-size:13px;font-weight:600;line-height:1.45;margin-bottom:3px}
-.news-item .meta{display:flex;gap:6px;font-size:11px;color:var(--muted);margin-bottom:4px}
+.news-item .meta{display:flex;gap:6px;font-size:11px;color:var(--muted);margin-bottom:4px;flex-wrap:wrap}
 .source-badge{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:1px 5px;font-size:10px}
+.source-badge.official{background:#faf5ff;border-color:#805ad5;color:#553c9a;font-weight:600}
+.deadline-badge{background:#e6fffa;border:1px solid #0987a0;border-radius:3px;padding:1px 5px;font-size:10px;color:#0987a0;font-weight:600}
 .news-item .desc{font-size:12px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .reason-box{display:flex;align-items:flex-start;gap:6px;background:#edf2f7;border-top:1px dashed var(--border);padding:6px 14px 8px;font-size:11px;color:#4a5568;line-height:1.5}
 .reason-label{font-size:10px;font-weight:700;color:#805ad5;white-space:nowrap;flex-shrink:0}
@@ -41,281 +57,317 @@ header .date{font-size:11px;color:var(--muted);margin-top:3px}
     <div class="date">📅 2026.06.24 기준 · 매일 오전 7시 자동 업데이트</div>
   </div>
 </header>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="all">전체</button>
+  <button class="tab-btn" data-tab="s1">🚨 중대재해·산안법</button>
+  <button class="tab-btn" data-tab="s2">🤖 스마트안전</button>
+  <button class="tab-btn" data-tab="s3">🔧 신공법·신기술</button>
+  <button class="tab-btn" data-tab="s5">🏛️ 정부·KOSHA</button>
+  <button class="tab-btn" data-tab="s4">📊 수주소식</button>
+  <button class="tab-btn" data-tab="s6">👷 채용공고</button>
+</div>
+
 <div class="grid">
 
   <!-- 카테고리1: 중대재해 (full-width) -->
-  <div class="section s1 full-width">
+  <div class="section s1 full-width" data-section="s1">
     <div class="section-header"><span>🚨</span><h2>중대재해 · 산안법 &amp; 안전보건규칙</h2><span class="count">7건</span></div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.nocutnews.co.kr/news/6537438" target="_blank" rel="noopener">
-        <div class="title">[단독] 산재 가입 특고 150만…안전감독 적발은 2년간 232곳</div>
-        <div class="meta"><span class="source-badge">nocutnews.co.kr</span><span>06/24</span></div>
-        <div class="desc">건설현장 비계에서의 추락 위험과 특수고용 노동자의 산재 사망이 사업장 밖 도로 교통사고에서 다수 발생하는 등 안전감독 사각지대가 드러났다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>비계 등 외부 작업과 이동 중 위험까지 포함해 도급·특고 인력의 안전관리 책임 범위를 다시 점검해야 합니다.</span></div>
-    </div>
-
     <div class="news-wrap">
       <a class="news-item" href="http://www.4th.kr/news/articleView.html?idxno=2113612" target="_blank" rel="noopener">
         <div class="title">KCC건설 아파트 현장 또 사망사고…21일 만에 두 번째</div>
         <div class="meta"><span class="source-badge">4th.kr</span><span>06/23</span></div>
-        <div class="desc">김포 오퍼스 한강 스위첸 현장에서 협력사 근로자가 사망해 경찰·고용노동부가 원인을 조사 중이다. 앞선 1일 사망건은 개인질병으로 중대재해 미대상 종결됐다.</div>
+        <div class="desc">아파트 건설현장에서 협력사 소속 근로자가 사망해 고용노동부가 원인 조사에 착수. 앞선 1일 사고는 개인질병으로 중대재해 미대상 종결.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>같은 현장 반복 사망은 노동부 특별감독 대상이 되기 쉬우므로 사고 직후 작업중지·원인분석 절차를 선제적으로 갖춰야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>같은 현장 단기간 반복 사망사고는 원청의 현장 안전관리 체계 점검 필요성을 시사한다.</span></div>
     </div>
-
     <div class="news-wrap">
-      <a class="news-item" href="https://idsn.co.kr/news/view/1065599038089402" target="_blank" rel="noopener">
-        <div class="title">[23일 사건사고] 김포 아파트 공사현장 50대 근로자 휴식 중 돌연사</div>
-        <div class="meta"><span class="source-badge">idsn.co.kr</span><span>06/23</span></div>
-        <div class="desc">경기 김포시 아파트 건설현장에서 50대 근로자가 휴식 중 의식을 잃고 쓰러져 숨져 경찰이 사망 원인을 조사하고 있다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>폭염기 휴식 중 돌연사는 온열질환·심혈관 위험과 연관될 수 있어 그늘막·수분·휴게시간 등 폭염 대응 점검이 필요합니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.edaily.co.kr/news/newspath.asp?newsid=04496886645484672" target="_blank" rel="noopener">
+      <a class="news-item" href="https://n.news.naver.com/mnews/article/018/0006313138?sid=101" target="_blank" rel="noopener">
         <div class="title">박창근 국토안전관리원장 "사망사고 40%가 소규모 현장…올해 1.5만곳 집중관리"</div>
         <div class="meta"><span class="source-badge">edaily.co.kr</span><span>06/23</span></div>
-        <div class="desc">국토안전관리원이 소규모 공사장 안전관리를 대폭 강화한다. 1만 5000개 현장을 집중관리 대상으로 선정해 연말까지 안전 컨설팅을 실시할 계획이다.</div>
+        <div class="desc">국토안전관리원이 소규모 공사장 안전관리를 대폭 강화. 1만 5000개 현장을 집중 관리 대상으로 선정해 연말까지 안전 컨설팅 실시.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>50억 미만 소규모 현장이 집중 점검 대상이 된 만큼, 해당 규모 현장은 컨설팅 수검과 기본 안전조치 정비를 미리 준비해야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>사망사고의 40%가 소규모 현장에 집중된 만큼 50억 미만 현장 안전관리자의 역할이 더욱 중요해진다.</span></div>
     </div>
-
     <div class="news-wrap">
-      <a class="news-item" href="https://www.junggi.co.kr/news/articleView.html?idxno=36867" target="_blank" rel="noopener">
-        <div class="title">KCC건설 오퍼스 한강 스위첸 현장서 근로자 사망</div>
-        <div class="meta"><span class="source-badge">junggi.co.kr</span><span>06/23</span></div>
-        <div class="desc">지난 1일 같은 현장에서 발생한 사망사고는 고용노동부 조사 결과 개인질병에 의한 재해로 중대재해 미대상 종결된 바 있다.</div>
+      <a class="news-item" href="https://n.news.naver.com/mnews/article/079/0004160966?sid=102" target="_blank" rel="noopener">
+        <div class="title">[단독] 산재 가입 특고 150만…안전감독 적발은 2년간 232곳</div>
+        <div class="meta"><span class="source-badge">nocutnews.co.kr</span><span>06/24</span></div>
+        <div class="desc">건설현장 비계 추락 위험과 특수고용 노동자의 산재 사망이 사업장 밖 도로 위 교통사고에서 다수 발생하는 것으로 나타남.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>중대재해 대상 여부를 가르는 질병 vs 업무관련성 판정 사례로, 사고 발생 시 의무기록·작업환경 자료 확보의 중요성을 보여줍니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>특고·이동 중 재해는 기존 현장 중심 안전관리의 사각지대로, 작업 동선 전반의 위험성 평가가 요구된다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="https://www.etoday.co.kr/news/view/2595950" target="_blank" rel="noopener">
         <div class="title">더위와 싸우는 공사장…'20분 의무휴식' 안착 시험대</div>
         <div class="meta"><span class="source-badge">etoday.co.kr</span><span>06/23</span></div>
-        <div class="desc">최근 5년 온열질환의 절반이 건설업에서 발생했다. 33도 이상 작업 시 20분 이상 휴식이 지난해 산업안전보건기준에 관한 규칙 개정으로 법적 의무가 됐다.</div>
+        <div class="desc">최근 5년 온열질환의 절반이 건설업. 33도 이상 작업 시 2시간마다 20분 이상 휴식 의무화한 안전보건규칙 개정이 본격 시험대에 오름.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>폭염기 본격화 시점에서 2시간마다 20분 휴식은 법적 의무이므로, 작업일정·휴게공간 운영 기록을 남겨 위반 리스크를 줄여야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>폭염기 진입으로 의무휴식·그늘·물 제공 등 규칙 준수 여부가 안전관리자의 핵심 점검 항목이 된다.</span></div>
     </div>
-
+    <div class="news-wrap">
+      <a class="news-item" href="https://idsn.co.kr/news/view/1065599038089402" target="_blank" rel="noopener">
+        <div class="title">김포 아파트 공사현장서 50대 근로자 휴식 중 돌연사…경찰 사망원인 조사</div>
+        <div class="meta"><span class="source-badge">idsn.co.kr</span><span>06/23</span></div>
+        <div class="desc">경기 김포시 아파트 건설현장에서 50대 근로자가 휴식 중 의식을 잃고 쓰러져 숨짐. 경찰이 정확한 사망 원인을 조사 중.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>폭염기 휴식 중 발생하는 심혈관계 돌연사 대비 응급대응 체계와 건강관리 점검이 필요하다.</span></div>
+    </div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.junggi.co.kr/news/articleView.html?idxno=36867" target="_blank" rel="noopener">
+        <div class="title">KCC건설 오퍼스 한강 스위첸 현장서 근로자 사망</div>
+        <div class="meta"><span class="source-badge">junggi.co.kr</span><span>06/23</span></div>
+        <div class="desc">지난 1일 발생한 사망사고는 고용노동부 조사 결과 개인질병에 의한 재해로 중대재해 미대상 종결. 협력사 근로자가 현장 내부에서 쓰러짐.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>질병 재해도 작업환경·과로 요인이 영향을 줄 수 있어 근로자 건강상태 관리가 중요하다.</span></div>
+    </div>
     <div class="news-wrap">
       <a class="news-item" href="https://www.asiatime.co.kr/article/20260527500296" target="_blank" rel="noopener">
         <div class="title">한수원, 건설현장 안전역량 강화…전사 워크숍 개최</div>
         <div class="meta"><span class="source-badge">asiatime.co.kr</span><span>05/27</span></div>
-        <div class="desc">한국수력원자력이 전사 건설안전 역량 강화 워크숍을 개최한다. 기후위기로 폭염일수가 늘며 온열질환 예방이 산안법·안전보건규칙 개정 핵심 과제로 부상했다.</div>
+        <div class="desc">한국수력원자력이 전사 건설안전 역량 강화 워크숍 개최. 폭염일수 증가에 따른 온열질환 예방과 산안법·안전보건규칙 개정 대응이 배경.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>발주처 차원의 안전역량 강화 움직임은 협력사 현장 평가로 이어지므로, 안전관리자도 교육·역량 강화 프로그램을 선제 준비할 필요가 있습니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>발주처 차원의 안전 워크숍 확산은 협력사 안전관리자에게도 강화된 안전기준 준수를 요구한다.</span></div>
     </div>
-
   </div>
 
   <!-- 카테고리2: 스마트안전 -->
-  <div class="section s2">
+  <div class="section s2" data-section="s2">
     <div class="section-header"><span>🤖</span><h2>스마트안전기술</h2><span class="count">5건</span></div>
-
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.safetynews.co.kr/news/articleView.html?idxno=249157" target="_blank" rel="noopener">
+        <div class="title">산업현장 AI 스마트 안전기술 어디까지 왔나</div>
+        <div class="meta"><span class="source-badge">safetynews.co.kr</span><span>06/24</span></div>
+        <div class="desc">IoT 센서 기반 유해가스·소음 모니터링, 웨어러블 안전장비, 드론·로봇 위험구역 점검 등 AI 스마트 안전기술이 건설현장에서 활약.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>스마트 안전장비 도입은 인력 한계를 보완하는 수단으로, 현장 적용 우선순위 검토가 필요하다.</span></div>
+    </div>
     <div class="news-wrap">
       <a class="news-item" href="https://www.koit.co.kr/news/articleView.html?idxno=207622" target="_blank" rel="noopener">
         <div class="title">"예방 중심 '스마트 안전장비' 도입은 신중히"</div>
         <div class="meta"><span class="source-badge">koit.co.kr</span><span>06/18</span></div>
-        <div class="desc">건설현장에서 AI·IoT 기반 스마트 안전기술(접근감지 장비, 스마트 에어백 조끼, 로봇·드론 원격 관측 등) 도입 시 실효성을 따져 신중히 접근해야 한다는 지적이다.</div>
+        <div class="desc">건설현장의 AI·IoT 기반 스마트 안전기술 도입이 늘지만 접근감지 장비, 스마트 에어백 조끼 등은 현장 특성에 맞춘 신중한 도입이 권고됨.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>장비 도입 자체보다 현장 적합성·운영체계가 중요하므로, 예산 투입 전 실제 위험요인과의 부합 여부를 검토해야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>장비 과신은 오히려 위험을 키울 수 있어 현장 적합성·운영체계까지 함께 검토해야 한다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="https://www.dnews.co.kr/uhtml/view.jsp?idxno=202606161220286900529" target="_blank" rel="noopener">
         <div class="title">건설 데이터 '누가, 어디까지 쓸까'…권리체계·활용기준 수립 시급</div>
         <div class="meta"><span class="source-badge">dnews.co.kr</span><span>06/17</span></div>
-        <div class="desc">BIM, 디지털트윈, IoT센서, 드론, CCTV 등 스마트 건설기술이 전 과정에 확산되며 건설 데이터의 권리체계와 활용기준 정립이 시급하다는 보고서가 나왔다.</div>
+        <div class="desc">BIM, 디지털트윈, IoT센서, 드론, CCTV 등 스마트 건설기술이 전 과정에 확산되면서 데이터 권리체계와 활용기준 정립이 시급하다는 보고서.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>현장 CCTV·IoT 센서 데이터는 안전관리 근거이자 개인정보 이슈를 동반하므로, 수집·활용 기준을 미리 정해둬야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>안전 모니터링 데이터의 활용 범위와 근로자 정보보호 기준 마련이 관리자의 새 과제가 된다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="https://www.asiatime.co.kr/article/20260615500067" target="_blank" rel="noopener">
         <div class="title">국토부, '2026 스마트건설 챌린지' 공모 접수</div>
         <div class="meta"><span class="source-badge">asiatime.co.kr</span><span>06/15</span></div>
-        <div class="desc">안전관리·주택·도로·철도·BIM 5개 분야로 총상금 3억원 규모. 품질·안전 확보를 위한 AI 기반 스마트 건설기술(BIM·드론·로봇·IoT·빅데이터)을 발굴한다.</div>
+        <div class="desc">안전관리·주택·도로·철도·BIM 5개 분야로 AI 기반 스마트 건설기술을 발굴. 총상금 3억원 규모, 입상 시 현장실증 지원.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>정부가 안전관리 분야 스마트기술을 직접 발굴·지원하는 만큼, 우수 사례를 벤치마킹해 현장 적용을 검토할 기회입니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>안전관리 분야가 별도 트랙으로 포함돼 현장 적용 가능한 신기술 동향 파악에 도움이 된다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="https://www.g-enews.com/view.php?ud=202606150846207596ea13369bfa_1" target="_blank" rel="noopener">
         <div class="title">정부 산업재해 강력 경고 통했나…건설업, 사망 사고 큰 폭 감소</div>
         <div class="meta"><span class="source-badge">g-enews.com</span><span>06/15</span></div>
-        <div class="desc">현대·대우·GS·롯데건설 등이 AI 통역·번역 시스템을 확대하고 IoT, 드론, BIM, VR·AR, 모듈러 등 스마트 기술을 적용하며 사망사고가 줄었다는 분석이다.</div>
+        <div class="desc">현대·대우·GS·롯데건설 등이 AI 통역·번역, IoT, 드론, BIM, VR·AR, 모듈러 등 스마트 기술을 확대 적용하며 사망사고가 큰 폭 감소.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>외국인 근로자 대상 AI 통역 등 소통 개선이 사고 감소에 기여한 사례로, 현장 안전소통 방식 개선의 힌트를 줍니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>스마트 기술 도입과 사망사고 감소의 상관성은 안전 투자 효과의 근거로 활용할 수 있다.</span></div>
     </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.kbmaeil.com/article/20260615500055" target="_blank" rel="noopener">
-        <div class="title">AI·로봇 활용 스마트건설 기술 한자리에…국토부, 챌린지 개최</div>
-        <div class="meta"><span class="source-badge">kbmaeil.com</span><span>06/15</span></div>
-        <div class="desc">국토교통부가 AI·로봇 등 첨단기술로 건설현장 안전성과 생산성을 높이기 위해 BIM·드론·로봇·IoT·빅데이터·디지털 트윈 기술을 평가하는 챌린지를 연다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>안전·AI·BIM이 핵심 평가 항목인 만큼, 정부가 지향하는 스마트안전 기술 방향을 가늠해 현장 도입 우선순위를 세울 수 있습니다.</span></div>
-    </div>
-
   </div>
 
   <!-- 카테고리3: 신공법 -->
-  <div class="section s3">
+  <div class="section s3" data-section="s3">
     <div class="section-header"><span>🔧</span><h2>신규공법 · 신기술</h2><span class="count">5건</span></div>
-
     <div class="news-wrap">
-      <a class="news-item" href="http://www.wikileaks-kr.org/news/articleView.html?idxno=188938" target="_blank" rel="noopener">
-        <div class="title">[창간기획-건설의 미래]➁ "AI 없이는 못 짓는다"…'생존 코드' 된 인공지능</div>
-        <div class="meta"><span class="source-badge">wikileaks-kr.org</span><span>06/24</span></div>
-        <div class="desc">AI가 입찰 분석, 계약 리스크 검토, 설계 자동화, 중대재해 예방까지 건설 가치사슬 전반을 파고들며 AI 내재화 수준이 향후 수주 경쟁력의 핵심이 되고 있다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>AI가 중대재해 예방 영역까지 확장되는 만큼, 안전관리자도 AI 기반 위험예측·예방 도구의 활용 역량을 키워야 합니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://n.news.naver.com/mnews/article/014/0005538675" target="_blank" rel="noopener">
+      <a class="news-item" href="https://n.news.naver.com/mnews/article/014/0005538675?sid=101" target="_blank" rel="noopener">
         <div class="title">롯데건설, 교량 휘어짐 막는 신공법 개발</div>
         <div class="meta"><span class="source-badge">fnnews.com</span><span>06/23</span></div>
-        <div class="desc">롯데건설이 대련건설·유신·중앙대 산학협력단과 공동 개발한 '강관가로보 공법'이 한국방재협회 재난안전신기술로 인정받았다.</div>
+        <div class="desc">롯데건설이 대련건설·유신·중앙대 산학협력단과 공동 개발한 '강관가로보 공법'이 한국방재협회 재난안전신기술로 인정받음.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>교량 시공 중 붕괴 위험을 줄이는 공법으로, 가설구조물 안전성 확보가 핵심인 토목현장 안전관리에 직접 참고가 됩니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>시공 중 붕괴 위험을 낮추는 공법은 교량 현장의 중대재해 예방 측면에서 주목할 만하다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="http://www.thefirstmedia.net/news/articleView.html?idxno=201997" target="_blank" rel="noopener">
-        <div class="title">"교량 시공 방식 선도"… 롯데건설, 붕괴 위험 낮추는 신공법 개발</div>
+        <div class="title">"교량 시공 방식 선도"…롯데건설, 붕괴 위험 낮추는 신공법 개발</div>
         <div class="meta"><span class="source-badge">thefirstmedia.net</span><span>06/23</span></div>
-        <div class="desc">'강관가로보 공법'이 재난안전신기술 제2026-4호로 지정됐다. 교량 시공 중 발생하는 콘크리트 구조물의 붕괴 위험을 낮추는 기술이다.</div>
+        <div class="desc">'강관가로보 공법'이 재난안전신기술 제2026-4호로 지정. 교량 시공 중 발생하는 콘크리트 관련 붕괴 위험을 줄이는 기술.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>재난안전신기술 지정은 공공공사 적용 확대로 이어질 수 있어, 신공법 적용 현장의 안전 검토 항목을 미리 숙지할 필요가 있습니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>정부 인증 신기술은 안전성 검증이 완료된 만큼 현장 도입 검토 시 신뢰 근거가 된다.</span></div>
     </div>
-
+    <div class="news-wrap">
+      <a class="news-item" href="http://www.wikileaks-kr.org/news/articleView.html?idxno=188938" target="_blank" rel="noopener">
+        <div class="title">[창간기획-건설의 미래] "AI 없이는 못 짓는다"…'생존 코드' 된 인공지능</div>
+        <div class="meta"><span class="source-badge">wikileaks-kr.org</span><span>06/24</span></div>
+        <div class="desc">AI가 설계 자동화, 계약 리스크 검토, 중대재해 예방까지 건설 가치사슬 전반에 확산. AI 내재화 수준이 수주 경쟁력의 핵심 기준으로 부상.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>AI 기반 중대재해 예방 솔루션 흐름은 안전관리 업무의 디지털 전환 방향을 보여준다.</span></div>
+    </div>
     <div class="news-wrap">
       <a class="news-item" href="http://www.wikileaks-kr.org/news/articleView.html?idxno=188919" target="_blank" rel="noopener">
-        <div class="title">[창간기획-건설의 미래]➀ 사람과 기술…스마트 건설 확산</div>
+        <div class="title">[창간기획-건설의 미래] 사람과 기술…스마트 건설 확산</div>
         <div class="meta"><span class="source-badge">wikileaks-kr.org</span><span>06/23</span></div>
-        <div class="desc">건설사의 신기술 개발 노력을 조명하는 기획 시리즈로, 스마트 건설 확산과 인력·기술의 결합 흐름을 짚는다.</div>
+        <div class="desc">건설업의 미래를 이끌 건설사의 신기술 개발 노력을 조명. 스마트 건설 확산, 인공지능, 신공법 확보 경쟁이 핵심 키워드로 제시됨.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>스마트 건설 확산은 작업 방식 변화로 새로운 위험요인을 동반하므로, 신기술 도입 시 위험성평가를 함께 갱신해야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>업계 신기술 경쟁 흐름을 파악하면 현장 안전기술 도입 트렌드를 선제적으로 준비할 수 있다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="https://www.socialvalue.kr/news/view/1065572964675507" target="_blank" rel="noopener">
         <div class="title">롯데건설, 신공법으로 교량 붕괴 사고 줄인다</div>
         <div class="meta"><span class="source-badge">socialvalue.kr</span><span>06/23</span></div>
-        <div class="desc">롯데건설이 개발한 교량 붕괴 사고 예방 신공법 '강관가로보 공법'이 재난안전신기술로 지정됐다.</div>
+        <div class="desc">롯데건설이 개발한 교량 붕괴 사고 예방 '강관가로보 공법'이 재난안전신기술로 지정되며 시공 안전성 향상이 기대됨.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>붕괴는 대표적 중대재해 유형이므로, 구조적 붕괴 위험을 설계 단계에서 줄이는 공법 동향은 안전관리자가 주목할 만합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>구조물 붕괴는 대표적 중대재해 유형으로, 예방형 공법 확산은 현장 위험 감소에 직결된다.</span></div>
     </div>
-
   </div>
 
-  <!-- 카테고리4: 수주동향 -->
-  <div class="section s4">
-    <div class="section-header"><span>📊</span><h2>건설업 수주 · 경기동향</h2><span class="count">5건</span></div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://n.news.naver.com/mnews/article/003/0014018104" target="_blank" rel="noopener">
-        <div class="title">재건 시장 열리나…건설업 수혜 기대 속 '신중 모드'</div>
-        <div class="meta"><span class="source-badge">newsis.com</span><span>06/21</span></div>
-        <div class="desc">중동 전쟁 이후 재건 시장 기대로 해외 수주 환경 개선이 예상된다. 플랜트·에너지 인프라 중심 대형 프로젝트 발주가 점쳐지나 업계는 신중한 분위기다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>해외 플랜트 수주 확대는 고위험 EPC 현장 증가로 이어지므로, 해외 안전관리 기준·인력 운영을 미리 점검해 둘 필요가 있습니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.newsquest.co.kr/news/articleView.html?idxno=268391" target="_blank" rel="noopener">
-        <div class="title">동국제강, 봉형강으로 반등했지만…2분기 내수 둔화가 변수</div>
-        <div class="meta"><span class="source-badge">newsquest.co.kr</span><span>06/23</span></div>
-        <div class="desc">건산연 6월 월간건설시장동향에 따르면 2026년 4월 건설기성은 11조7000억원으로 전년 동월 대비 소폭 증가에 그쳐 국내 건설경기 둔화가 이어지고 있다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>경기 둔화 국면에서는 공기 단축·비용 압박이 안전 투자 위축으로 이어질 수 있어, 안전예산 확보 논리를 미리 마련해야 합니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.ziksir.com/news/articleView.html?idxno=137466" target="_blank" rel="noopener">
-        <div class="title">9000선 넘은 코스피, '원전·중동 르네상스' 품은 건설주</div>
-        <div class="meta"><span class="source-badge">ziksir.com</span><span>06/22</span></div>
-        <div class="desc">현대건설은 미국 펠리세이즈 SMR 2기, 불가리아 코즐로두이 원전 등 해외 원전 EPC 프로젝트 가시성이 높아지며 건설주 기대가 커지고 있다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>원전 등 특수 플랜트 수주 확대는 고도의 안전·품질 관리체계를 요구하므로, 관련 분야 안전 역량 수요가 커질 전망입니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://www.thebell.co.kr/free/content/ArticleView.asp?key=202606221042538960105839" target="_blank" rel="noopener">
-        <div class="title">[i-point] 엔알비, PC모듈러 공동주택 수주잔고 확대 기대</div>
-        <div class="meta"><span class="source-badge">thebell.co.kr</span><span>06/22</span></div>
-        <div class="desc">공사금액 836억6000만원 규모 사업이 본계약 시 수주잔고에 반영될 전망이다. PC모듈러 공동주택은 중·고층 프로젝트 중심으로 발주 확대가 예상된다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>모듈러·PC 공법 확산은 양중·조립 작업 비중을 높이므로, 중량물 취급·인양 안전관리 강화가 필요합니다.</span></div>
-    </div>
-
-    <div class="news-wrap">
-      <a class="news-item" href="https://n.news.naver.com/mnews/article/016/0002659347" target="_blank" rel="noopener">
-        <div class="title">매물 없는데 하반기에만 2만 세대 이동…'이주 수요' 임대차 시장 흔들</div>
-        <div class="meta"><span class="source-badge">heraldcorp.com</span><span>06/21</span></div>
-        <div class="desc">건산연은 '2026 하반기 건설·부동산 경기 전망 세미나'에서 올해 하반기 전세가격이 5.0% 상승할 것으로 전망했다.</div>
-      </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>정비사업·이주 수요는 도심 철거·재건축 현장 증가로 이어지므로, 해체공사 안전관리 수요 변화를 가늠할 수 있습니다.</span></div>
-    </div>
-
-  </div>
-
-  <!-- 카테고리5: 정부방향성 -->
-  <div class="section s5">
-    <div class="section-header"><span>🏛️</span><h2>정부방향성 · 고용노동부 · KOSHA</h2><span class="count">5건</span></div>
-
+  <!-- 카테고리5: 정부방향성 (수주 앞으로 이동) -->
+  <div class="section s5" data-section="s5">
+    <div class="section-header"><span>🏛️</span><h2>정부방향성 · 고용노동부 · KOSHA</h2><span class="count">4건</span></div>
     <div class="news-wrap">
       <a class="news-item" href="https://www.todayenergy.kr/news/articleView.html?idxno=298512" target="_blank" rel="noopener">
         <div class="title">고용노동부-안전보건공단, 소규모 사업장 '안전 예산' 등 지원 규모 확대</div>
         <div class="meta"><span class="source-badge">todayenergy.kr</span><span>06/01</span></div>
-        <div class="desc">KOSHA가 10인 미만 사업장, 50억원 미만 건설현장의 떨어짐·끼임·부딪힘 예방을 위한 '특화 안전 일터 조성 지원 사업' 등 지원 규모를 확대하고 있다.</div>
+        <div class="desc">KOSHA가 10인 미만 사업장, 50억원 미만 건설현장의 떨어짐·끼임·부딪힘 예방을 위한 특화 안전일터 조성 지원을 확대.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>소규모 현장은 정부 지원금으로 안전시설을 보강할 수 있으므로, 지원사업 신청 자격과 절차를 확인해 활용하는 것이 유리합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>소규모 현장 정부지원 사업을 활용하면 부족한 예산으로도 핵심 위험 개선이 가능하다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="http://www.metroseoul.co.kr/article/20260531500150" target="_blank" rel="noopener">
         <div class="title">안전보건공단, 산재 취약 영세 사업장에 433억 투입…3대 사고예방 집중</div>
         <div class="meta"><span class="source-badge">metroseoul.co.kr</span><span>05/31</span></div>
-        <div class="desc">정부가 산재 사각지대 영세 사업장 지원을 위해 433억원을 투입한다. 10인 미만 사업장과 50억원 미만 건설현장이 클린사업장 조성지원 대상이다.</div>
+        <div class="desc">정부가 산재 사각지대 영세 사업장에 433억원을 투입. 10인 미만 사업장과 50억원 미만 건설현장 대상 클린사업장 조성 지원 사업.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>떨어짐·끼임·부딪힘 3대 사고 예방이 정부 지원 초점이므로, 현장 위험성평가 우선순위를 이에 맞춰 정렬하면 좋습니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>3대 사고(추락·끼임·부딪힘) 예방 지원은 건설현장 사망사고 저감 정책과 직결된다.</span></div>
     </div>
-
     <div class="news-wrap">
-      <a class="news-item" href="https://www.korea.kr/news/policyNewsView.do?newsId=148965175" target="_blank" rel="noopener">
-        <div class="title">산안법 개정으로 안전보건공시제·명예산업안전감독관 의무화 도입</div>
-        <div class="meta"><span class="source-badge">korea.kr</span><span>05/28</span></div>
-        <div class="desc">2026년 2월 산업안전보건법 개정으로 안전보건공시제와 명예산업안전감독관 의무화가 도입됐고, 폭염 작업 시 2시간마다 20분 이상 휴식 규칙도 시행됐다.</div>
+      <a class="news-item" href="https://www.cnbizm.com/news/articleView.html?idxno=306353" target="_blank" rel="noopener">
+        <div class="title">XR 기반 안전교육 솔루션 엠라인스튜디오, '2026 OSH INNO Expo' 참가</div>
+        <div class="meta"><span class="source-badge">cnbizm.com</span><span>06/24</span></div>
+        <div class="desc">안전보건공단(KOSHA)이 주관하는 '2026 OSH Innovation and Technology Expo'에서 XR 기반 안전교육 솔루션이 소개됨.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>안전보건공시제와 명예감독관 의무화는 신규 법적 의무이므로, 사업장 대응 체계와 공시 준비 상태를 점검해야 합니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>XR·VR 안전교육은 체험형 교육 효과가 높아 현장 안전교육 개선 수단으로 검토할 만하다.</span></div>
     </div>
-
     <div class="news-wrap">
       <a class="news-item" href="http://www.impacton.net/news/articleView.html?idxno=18994" target="_blank" rel="noopener">
-        <div class="title">【ESG 신간】뉴 워(New War), 안전 전문가 관점에서 본 중대재해처벌법</div>
+        <div class="title">[ESG 신간] 뉴 워(New War), 안전 전문가 관점의 중대재해처벌법</div>
         <div class="meta"><span class="source-badge">impacton.net</span><span>05/22</span></div>
-        <div class="desc">현장 안전자문 경험을 가진 전문가가 중대재해처벌법을 안전 전문가의 시각에서 해설한 신간이 출간됐다.</div>
+        <div class="desc">송변전건설 안전자문위원 등을 지낸 안전 전문가가 중대재해처벌법을 현장 관점에서 해설한 신간을 소개.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>중대재해처벌법 실무 해설은 안전관리자의 법적 책임 범위와 대응 논리를 정비하는 데 실질적 참고가 됩니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>중대재해처벌법 실무 해설은 안전관리자의 법적 책임과 대응 체계 이해에 참고가 된다.</span></div>
+    </div>
+  </div>
+
+  <!-- 카테고리4: 수주동향 (뒤로 이동) -->
+  <div class="section s4" data-section="s4">
+    <div class="section-header"><span>📊</span><h2>건설업 수주 · 경기동향</h2><span class="count">5건</span></div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.newsquest.co.kr/news/articleView.html?idxno=268391" target="_blank" rel="noopener">
+        <div class="title">동국제강, 봉형강으로 반등했지만…2분기 내수 둔화가 변수</div>
+        <div class="meta"><span class="source-badge">newsquest.co.kr</span><span>06/23</span></div>
+        <div class="desc">건설산업연구원에 따르면 2026년 4월 건설기성은 11조7000억원으로 전년 동월 대비 1.1% 수준. 국내 건설경기 둔화가 지속되는 양상.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>경기 둔화기에는 공기단축·인력감축 압박이 커져 안전관리 여건 악화에 유의해야 한다.</span></div>
+    </div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://n.news.naver.com/mnews/article/003/0014018104?sid=101" target="_blank" rel="noopener">
+        <div class="title">재건 시장 열리나…건설업 수혜 기대 속 '신중 모드'</div>
+        <div class="meta"><span class="source-badge">newsis.com</span><span>06/21</span></div>
+        <div class="desc">중동 전쟁 이후 해외 수주 환경 개선 기대. 플랜트·에너지 인프라 중심 대형 프로젝트 발주 전망 속 건설업계는 신중한 입장.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>해외 대형 EPC 수주 확대는 현지 안전기준 대응 역량을 갖춘 안전인력 수요로 이어진다.</span></div>
+    </div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.ziksir.com/news/articleView.html?idxno=137466" target="_blank" rel="noopener">
+        <div class="title">9000선 넘은 코스피, '원전·중동 르네상스' 품은 건설주</div>
+        <div class="meta"><span class="source-badge">ziksir.com</span><span>06/22</span></div>
+        <div class="desc">현대건설은 미국 펠리세이즈 SMR 2기, 불가리아 코즐로두이 원전 등 해외 원전 EPC 프로젝트의 가시성이 부각되며 건설주가 주목받음.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>원전 EPC 확대는 고위험·고난도 현장으로, 특수 안전관리 역량의 중요성이 커진다.</span></div>
+    </div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.thebell.co.kr/free/content/ArticleView.asp?key=202606221042538960105839" target="_blank" rel="noopener">
+        <div class="title">[i-point] 엔알비 경영진, 회사 주식 자발적 취득</div>
+        <div class="meta"><span class="source-badge">thebell.co.kr</span><span>06/22</span></div>
+        <div class="desc">PC모듈러 공동주택 사업의 공사금액은 836억6000만원 규모. 중·고층 프로젝트 중심으로 PC모듈러 발주가 확대될 가능성 제기.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>모듈러·PC공법 확산은 양중·조립 작업 비중을 높여 새로운 위험요인 관리가 필요하다.</span></div>
+    </div>
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.viva100.com/article/20260623500179" target="_blank" rel="noopener">
+        <div class="title">디에이건설, '테라스99 동탄' 25일 분양 돌입</div>
+        <div class="meta"><span class="source-badge">viva100.com</span><span>06/23</span></div>
+        <div class="desc">화성 동탄구 아파트 매매가격지수 상승세 속 분양 돌입. 2026년 6월 2주 경기도 아파트 매매가격은 0.20% 상승했다는 동향 조사 인용.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>수도권 신규 분양·착공 증가는 현장 가동 확대로 이어져 안전관리 수요를 늘린다.</span></div>
+    </div>
+  </div>
+
+  <!-- 카테고리6: 채용공고 (full-width, 가장 뒤) -->
+  <div class="section s6 full-width" data-section="s6">
+    <div class="section-header"><span>👷</span><h2>안전관리자 채용공고</h2><span class="count">3건</span></div>
+
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.saramin.co.kr/zf_user/search/recruit?searchword=현대건설+안전+HILLSTATE" target="_blank" rel="noopener">
+        <div class="title">현대건설(주) — HILLSTATE Academy 안전관리 교육생</div>
+        <div class="meta">
+          <span class="source-badge">도급 2위</span>
+          <span>교육생 (학력·경력 무관)</span>
+          <span class="deadline-badge">~08/03</span>
+        </div>
+        <div class="desc">시평액 17조 2,485억. 학력·경력 무관 교육생 선발 과정. 수료 후 현대건설 현장 안전직 배치를 목표로 하는 인재양성 프로그램.</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 체크</span><span>직접 정규직 채용이 아닌 교육생 과정 — 현대건설 정규 안전직을 목표로 한다면 별도 공개채용 공고를 병행 모니터링할 것.</span></div>
     </div>
 
     <div class="news-wrap">
-      <a class="news-item" href="https://www.pinpointnews.co.kr/news/articleView.html?idxno=452655" target="_blank" rel="noopener">
-        <div class="title">부영그룹, 관리자 역량 워크숍 실시</div>
-        <div class="meta"><span class="source-badge">pinpointnews.co.kr</span><span>05/14</span></div>
-        <div class="desc">건설현장 중대재해 예방이 경영 핵심 과제로 부상하며, 안전관리를 단순 규정 준수를 넘어 KOSHA-MS 체계로 고도화하는 기업 움직임이 확산되고 있다.</div>
+      <a class="news-item" href="https://www.saramin.co.kr/zf_user/search/recruit?searchword=자이에스앤디+안전관리자" target="_blank" rel="noopener">
+        <div class="title">자이에스앤디(주) [GS계열사] — 안전관리자 경력사원</div>
+        <div class="meta">
+          <span class="source-badge">도급 69위 (GS건설 5위)</span>
+          <span>정규직</span>
+          <span class="deadline-badge">상시채용</span>
+        </div>
+        <div class="desc">시평액 4,605억 (모회사 GS건설 5위 계열사). 경력 3년 이상·4년제 졸업 이상. 상시 채용으로 수시 지원 가능.</div>
       </a>
-      <div class="reason-box"><span class="reason-label">💡 왜?</span><span>KOSHA-MS 등 안전보건경영시스템 인증은 발주·평가에서 가점 요인이 되므로, 자사 인증 현황과 갱신 일정을 챙길 필요가 있습니다.</span></div>
+      <div class="reason-box"><span class="reason-label">💡 체크</span><span>GS건설 계열 안정 트랙 — 경력 3년 이상 정규직 요건 충족 시 안정적인 입사 경로, 상시채용이므로 서류 준비 후 즉시 지원 가능.</span></div>
     </div>
 
+    <div class="news-wrap">
+      <a class="news-item" href="https://www.saramin.co.kr/zf_user/search/recruit?searchword=동부건설+안전+검단" target="_blank" rel="noopener">
+        <div class="title">동부건설(주) — 인천 검단16호공원 현장 전문직(안전)</div>
+        <div class="meta">
+          <span class="source-badge">도급 28위</span>
+          <span>계약직 (경력 5년 이상)</span>
+          <span class="deadline-badge">~07/03</span>
+        </div>
+        <div class="desc">시평액 1조 7,514억. 인천 검단16호공원 현장 한정 계약직 채용. 경력 5년 이상 필수. 마감 임박(07/03).</div>
+      </a>
+      <div class="reason-box"><span class="reason-label">💡 체크</span><span>경력 5년 이상 계약직·현장 한정 — 초급·신입은 자격 미스매치 가능, 07/03 마감 임박으로 빠른 서류 제출 필요.</span></div>
+    </div>
   </div>
 
 </div>
+
+<script>
+const tabs = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.section[data-section]');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    const target = tab.dataset.tab;
+    sections.forEach(sec => {
+      if (target === 'all' || sec.dataset.section === target) {
+        sec.classList.remove('hidden');
+      } else {
+        sec.classList.add('hidden');
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
