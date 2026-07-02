@@ -373,5 +373,6 @@ const tabs=document.querySelectorAll('.tab-btn');
 const sections=document.querySelectorAll('.section[data-section]');
 tabs.forEach(tab=>{tab.addEventListener('click',()=>{tabs.forEach(t=>t.classList.remove('active'));tab.classList.add('active');const target=tab.dataset.tab;sections.forEach(sec=>{if(target==='all'||sec.dataset.section===target){sec.classList.remove('hidden')}else{sec.classList.add('hidden')}});});});
 </script>
+<!-- pages-redeploy 2026-07-03 08:06 KST -->
 </body>
 </html>
