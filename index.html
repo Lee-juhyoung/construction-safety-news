@@ -45,6 +45,14 @@ header .date{font-size:11px;color:var(--muted);margin-top:3px}
 .news-item .desc{font-size:12px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .reason-box{display:flex;align-items:flex-start;gap:6px;background:#edf2f7;border-top:1px dashed var(--border);padding:6px 14px 8px;font-size:11px;color:#4a5568;line-height:1.5}
 .reason-label{font-size:10px;font-weight:700;color:#805ad5;white-space:nowrap;flex-shrink:0}
+.headline{display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,#2d3748 0%,#4c51bf 100%);border-radius:12px;padding:16px 18px;margin-bottom:16px;box-shadow:0 3px 10px rgba(76,81,191,.25)}
+.headline:hover{box-shadow:0 5px 16px rgba(76,81,191,.35)}
+.headline .hl-label{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;padding:3px 9px;border-radius:20px;margin-bottom:9px}
+.headline .hl-title{font-size:17px;font-weight:700;color:#fff;line-height:1.4;margin-bottom:7px}
+.headline .hl-why{font-size:12.5px;color:#e2e8f0;line-height:1.55;margin-bottom:9px}
+.headline .hl-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;color:#cbd5e0}
+.headline .hl-meta span{background:rgba(255,255,255,.12);border-radius:3px;padding:2px 7px}
+@media (max-width:640px){.headline .hl-title{font-size:15px}}
 </style>
 </head>
 <body>
@@ -54,6 +62,12 @@ header .date{font-size:11px;color:var(--muted);margin-top:3px}
     <div class="date">📅 2026.08.19 19:20 업데이트</div>
   </div>
 </header>
+<a class="headline" href="https://www.dnews.co.kr/uhtml/view.jsp?idxno=202608180951583460274" target="_blank" rel="noopener">
+  <span class="hl-label">⭐ 오늘의 핵심</span>
+  <div class="hl-title">건설안전특별법 제정 추진 — 산안법·중대재해처벌법과 '3중 규제' 정합성 문제 부상</div>
+  <div class="hl-why">세 법률이 모두 처벌·규제 강화 방향으로 움직이면서 같은 사고에 중복 책임이 걸릴 수 있습니다. 지금 해야 할 일은 발주자·시공사·협력사 간 안전관리 역할과 지시 이력을 문서로 명확히 남기는 것입니다.</div>
+  <div class="hl-meta"><span>📜 법령</span><span>대한경제</span><span>08/19</span></div>
+</a>
 <div class="tabs">
   <button class="tab-btn active" data-tab="all">전체</button>
   <button class="tab-btn" data-tab="s7">📜 정부 노동안전대책</button>
